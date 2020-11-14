@@ -34,6 +34,7 @@ package org.firstinspires.ftc.teamcode;
 //import com.arcrobotics.ftclib.geometry.Transform2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 //import com.spartronics4915.lib.T265Camera;
 
 
@@ -51,13 +52,18 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Pushbot: Teleop POV", group="Pushbot")
+@TeleOp(name="Tele", group="Pushbot")
 
-public class PushbotTeleop extends LinearOpMode {
-
+public class PerseverenceTeleop extends LinearOpMode {
+    private ElapsedTime runtime = new ElapsedTime();
     /* Declare OpMode members. */
-    HardwarePushbot robot           = new HardwarePushbot();   // Use a Pushbot's hardware
+    HardwarePerseverence robot           = new HardwarePerseverence();   // Use a Pushbot's hardware
 //    Transform2d cameraToRobot = new Transform2d();
+    public void waitMilis(double timeOutMs) {
+
+    runtime.reset();
+    while (runtime.milliseconds() < timeOutMs) ;
+    }
 
 
     @Override
@@ -88,13 +94,12 @@ public class PushbotTeleop extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-      //  slamra.start();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
           //  slamra.getLastReceivedCameraUpdate();
-            double armCurr = robot.arm.getPosition();
-            double gripCurr = robot.arm.getPosition();
+            double armCurr = robot.arm.getCurrentPosition();
+            double forkCurr = robot.fork.getPosition();
             double rightX = gamepad1.right_stick_x;
             r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
             robotAngle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
@@ -107,16 +112,18 @@ public class PushbotTeleop extends LinearOpMode {
             robot.leftBackDrive.setPower(v3 * driveSpeed);
             robot.rightBackDrive.setPower(v4 * driveSpeed);
 
-            if (gamepad1.dpad_up) {
-                robot.arm.setPosition(armCurr+.1);
-            } else if (gamepad1.dpad_down) {
-                robot.arm.setPosition(armCurr-.1);
+            // Forks
+            if (gamepad2.b) {
+                robot.fork.setPosition(forkCurr+.1);
+                waitMilis(20);
+            } else if (gamepad2.a) {
+                robot.fork.setPosition(forkCurr-1);
+                waitMilis(20);
             }
-            if (gamepad1.y) {
-                robot.grip.setPosition(gripCurr+.1);
-            } else if (gamepad1.a) {
-                robot.grip.setPosition(gripCurr-1);
-            }
+            // Arm
+            robot.arm.setPower(gamepad2.left_stick_y);
+
+
 
 
             // Send telemetry message to signify robot running;
@@ -127,11 +134,9 @@ public class PushbotTeleop extends LinearOpMode {
             telemetry.addData("Left Power", robot.leftBackDrive.getPower());
             telemetry.addData("Right Power", robot.rightBackDrive.getPower());;
             telemetry.addLine("Servo Values");
-            telemetry.addData("Grip", robot.grip.getPosition());
-            telemetry.addData("Arm", robot.arm.getPosition());
+            telemetry.addData("Grip", robot.fork.getPosition());
+      //      telemetry.addData("Arm", robot.arm.getCurrentPosition());
             telemetry.update();
-
-            sleep(50);
         }
     }
 }

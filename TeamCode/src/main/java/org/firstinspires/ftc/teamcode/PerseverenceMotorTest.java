@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 //import com.spartronics4915.lib.T265Camera;
 @TeleOp(name="Motor Test", group="Pushbot")
-public class MotorTest extends LinearOpMode {
-    HardwarePushbot robot           = new HardwarePushbot();
+public class PerseverenceMotorTest extends LinearOpMode {
+    HardwarePerseverence robot           = new HardwarePerseverence();
     @Override
 
     public void runOpMode() {

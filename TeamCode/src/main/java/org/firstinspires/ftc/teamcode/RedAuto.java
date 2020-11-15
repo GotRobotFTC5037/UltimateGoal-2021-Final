@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -12,18 +13,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Autonomous(name = "Auto", group = "Pushbot")
 public class RedAuto extends LinearOpMode {
-    HardwarePerseverence robot           = new HardwarePerseverence();
-    private ElapsedTime runtime = new ElapsedTime();
+    HardwarePerseverence robot = new HardwarePerseverence();
+    private final ElapsedTime runtime = new ElapsedTime();
     private BNO055IMU imu;
     Orientation angles;
     static final double COUNTS_PER_MOTOR_REV = 537.6;
     static final double DRIVE_GEAR_REDUCTION = 1.0;     // This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_CENTIMETERS = 10.16;     // For figuring circumference
-    static final double COUNTS_PER_CENTIMETER = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_CENTIMETERS * 3.1415);
+    static final double COUNTS_PER_CENTIMETER = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_CENTIMETERS * 3.1415);
     static final double DRIVE_SPEED = 1.0;
     static final double TURN_SPEED = 0.8;
-    static final double DIST_PER_REV = (4 * 2.54 * Math.PI) / COUNTS_PER_MOTOR_REV;
+    static final double DIST_PER_REV = (10 * Math.PI) / COUNTS_PER_MOTOR_REV;
+
     public double subtractAngle(double angleA,
                                 double angleB) {
         double result;
@@ -33,16 +34,18 @@ public class RedAuto extends LinearOpMode {
         }
         return result;
     }
+
     public void waitMilis(double timeOutMs) {
 
         runtime.reset();
         while (runtime.milliseconds() < timeOutMs) ;
     }
+
     public void autoPilot(double heading,
-                           double pose,
-                           double distance,
-                           double power,
-                           double timeoutS) {
+                          double pose,
+                          double distance,
+                          double power,
+                          double timeoutS) {
 
         double currentHeading;
         double drvPower = power;
@@ -65,9 +68,8 @@ public class RedAuto extends LinearOpMode {
         double newBackRight = 0;
         runtime.reset();
         while ((runtime.seconds() < timeoutS)) {
-            currentHeading = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-            headingRadians = ((-currentHeading / 180) * 3.1416) + (1 / 2 * 3.1416);
-           // headingRadians = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle;
+            currentHeading = (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
+            headingRadians = ((imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle) + (2.5 * Math.PI)) % (2 * Math.PI);
             poseDegrees = ((pose - 3.1416 / 2) % (2 * 3.1416)) * (360 / (2 * 3.1416));
             if (poseDegrees > 180) {
                 poseDegrees -= 360;
@@ -83,7 +85,7 @@ public class RedAuto extends LinearOpMode {
             newBackLeft = robot.leftBackDrive.getCurrentPosition();
 
             dX = ((((newLeft - oldLeft) - (newBackLeft - oldBackLeft)
-                    - (newRight - oldRight) + (newBackRight - oldBackRight)) * Math.sin(Math.PI / 4)) / 4.0) * DIST_PER_REV;
+                    - (newRight - oldRight) + (newBackRight - oldBackRight)) * Math.sin(Math.PI / 2)) / 4.0) * DIST_PER_REV;
             dY = (((newLeft - oldLeft) + (newBackLeft - oldBackLeft)
                     + (newRight - oldRight) + (newBackRight - oldBackRight)) / 4.0) * DIST_PER_REV;
             distX += (Math.sin(headingRadians) * dX + Math.cos(headingRadians) * dY);
@@ -119,6 +121,14 @@ public class RedAuto extends LinearOpMode {
             robot.rightBackDrive.setPower(v4);
         }
     }
+    public void brake() {
+        robot.leftDrive.setPower(0);
+        robot.leftBackDrive.setPower(0);
+        robot.rightDrive.setPower(0);
+        robot.rightBackDrive.setPower(0);
+        return;
+    }
+
     public void runOpMode() {
         robot.init(hardwareMap);
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -129,8 +139,32 @@ public class RedAuto extends LinearOpMode {
         parameters.loggingTag = "IMU";
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+        //reset the encoders to 0
+        robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //run using the encoders
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitMilis(50);
-
-
+        waitForStart();
+        while (opModeIsActive()) {
+            autoPilot(0, 1.57, 61, .25, 15);
+            autoPilot(1.57,1.57,61,.25,15);
+            autoPilot(3.14,1.57,61,.25,15);
+            autoPilot(4.71,1.57,61,.25,15);
+            brake();
+            waitMilis(100);
+            stop();
+        }
     }
 }

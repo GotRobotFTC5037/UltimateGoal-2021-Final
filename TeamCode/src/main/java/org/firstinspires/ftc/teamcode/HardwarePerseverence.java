@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.rev.RevColorSensorV3;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -37,40 +39,40 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * This is NOT an opmode.
- *
+ * <p>
  * This class can be used to define all the specific hardware for a single robot.
  * In this case that robot is a Pushbot.
  * See PushbotTeleopTank_Iterative and others classes starting with "Pushbot" for usage examples.
- *
+ * <p>
  * This hardware class assumes the following device names have been configured on the robot:
  * Note:  All names are lower case and some have single spaces between words.
- *
+ * <p>
  * Motor channel:  Left  drive motor:        "left_drive"
  * Motor channel:  Right drive motor:        "right_drive"
  * Motor channel:  Manipulator drive motor:  "left_arm"
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class HardwarePerseverence
-{
+public class HardwarePerseverence {
     /* Public OpMode members. */
-    public DcMotor leftDrive   = null;
-    public DcMotor rightDrive  = null;
-    public DcMotor leftBackDrive    = null;
-    public DcMotor rightBackDrive   = null;
-    public DcMotor arm    = null;
-    public Servo fork   = null;
+    public DcMotor leftDrive = null;
+    public DcMotor rightDrive = null;
+    public DcMotor leftBackDrive = null;
+    public DcMotor rightBackDrive = null;
+    public DcMotor arm = null;
+    public Servo grip = null;
+    public RevColorSensorV3 bottomColor = null;
 
-    public static final double MID_SERVO       =  0.5 ;
-    public static final double ARM_UP_POWER    =  0.45 ;
-    public static final double ARM_DOWN_POWER  = -0.45 ;
+    public static final double MID_SERVO = 0.5;
+    public static final double ARM_UP_POWER = 0.45;
+    public static final double ARM_DOWN_POWER = -0.45;
 
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
+    private final ElapsedTime period = new ElapsedTime();
 
     /* Constructor */
-    public HardwarePerseverence(){
+    public HardwarePerseverence() {
 
     }
 
@@ -80,12 +82,13 @@ public class HardwarePerseverence
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftDrive  = hwMap.get(DcMotor.class, "ld");
+        leftDrive = hwMap.get(DcMotor.class, "ld");
         rightDrive = hwMap.get(DcMotor.class, "rd");
-        leftBackDrive    = hwMap.get(DcMotor.class, "lbd");
+        leftBackDrive = hwMap.get(DcMotor.class, "lbd");
         rightBackDrive = hwMap.get(DcMotor.class, "rbd");
         arm = hwMap.get(DcMotor.class, "arm");
-        fork = hwMap.get(Servo.class, "grip");
+        grip = hwMap.get(Servo.class, "grip");
+        bottomColor = hwMap.get(RevColorSensorV3.class, "bottomColor");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -108,5 +111,5 @@ public class HardwarePerseverence
         // Define and initialize ALL installed servos.
 
     }
- }
+}
 

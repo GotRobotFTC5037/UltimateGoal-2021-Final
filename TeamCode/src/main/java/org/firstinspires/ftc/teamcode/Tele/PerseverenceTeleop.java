@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Tele;
 
 //import com.arcrobotics.ftclib.geometry.Pose2d;
 //import com.arcrobotics.ftclib.geometry.Rotation2d;
@@ -41,7 +41,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.HardwarePerseverence;
 //import com.spartronics4915.lib.T265Camera;
 
 
@@ -59,7 +59,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name = "Tele", group = "Pushbot")
+@TeleOp(name = "org/firstinspires/ftc/teamcode/Tele", group = "Pushbot")
 
 public class PerseverenceTeleop extends LinearOpMode {
     HardwarePerseverence robot = new HardwarePerseverence();
@@ -141,10 +141,10 @@ public class PerseverenceTeleop extends LinearOpMode {
             // Forks
             if (gamepad2.b) {
                 robot.grip.setPosition(.65);
-                waitMilis(100);
+                waitMilis(10);
             } else if (gamepad2.a) {
                 robot.grip.setPosition(.2);
-                waitMilis(100);
+                waitMilis(10);
             }
             // Arm
             robot.arm.setPower(gamepad2.left_stick_y * .75);

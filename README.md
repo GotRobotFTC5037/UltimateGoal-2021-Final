@@ -273,7 +273,7 @@ Version 5.5 requires Android Studio 4.0 or later.
     * (advanced users) `BulkCachingMode.MANUAL`: Same as `BulkCachingMode.AUTO` except the cache is never cleared automatically. To avoid getting stale data, the cache must be manually cleared at the beginning of each loop body or as the user deems appropriate.
 * Removes PIDF Annotation values added in Rev 5.3 (to AndyMark, goBILDA and TETRIX motor configurations).
   * The new motor types will still be available but their Default control behavior will revert back to Rev 5.2
-* Adds new `ConceptMotorBulkRead` sample Opmode to demonstrate and compare Motor Bulk-Read modes for reducing I/O latencies.
+* Adds new `ConceptMotorBulkRead` sample org.firstinspires.ftc.teamcode.Opmode to demonstrate and compare Motor Bulk-Read modes for reducing I/O latencies.
 
 ## Version 5.3 (20191004-112306)
 * Fixes external USB/UVC webcam support
@@ -482,7 +482,7 @@ Changes include:
     - Added an external sample Op Mode that demonstrates localization using 2018-2019 (Rover Ruckus presented by QualComm) Vuforia targets.
     - Added an external sample Op Mode that demonstrates how to use the REV Robotics 2m Laser Distance Sensor.
     - Added an external sample Op Mode that demonstrates how to use the REV Robotics Blinkin LED Controller.
-    - Re-categorized external Java sample Op Modes to "TeleOp" instead of "Autonomous".
+    - Re-categorized external Java sample Op Modes to "org.firstinspires.ftc.teamcode.Opmodes.TeleOp" instead of "Autonomous".
 
 Known issues:
  * Initial support for UVC compatible cameras
@@ -595,7 +595,7 @@ Changes with version 3.2 include:
 * Includes many minor enhancements and fixes (too numerous to list).
 
 Known issues:
-* Auto complete function is incomplete and does not support the following (for now):
+* org.firstinspires.ftc.teamcode.Auto complete function is incomplete and does not support the following (for now):
      - Access via *this* keyword
      - Access via *super* keyword
      - Members of the super cloass, not overridden by the class
@@ -651,7 +651,7 @@ Changes include:
  * Publishes all the sources (not just a select few).
  * Includes Block programming improvements
     - Addition of optimized Vuforia blocks.
-    - Auto scrollbar to projects and sounds pages.
+    - org.firstinspires.ftc.teamcode.Auto scrollbar to projects and sounds pages.
     - Fixed blocks paste bug.
     - Blocks execute after while-opModeIsActive loop (to allow for cleanup before exiting op mode).
     - Added gyro integratedZValue block.
@@ -753,7 +753,7 @@ Changes include:
      - Added logging when a blocks file is read/written.
      - Fixed bug to properly render blocks even if missing devices from configuration file.
      - Added support for additional characters (not just alphanumeric) for the block file names (for download and upload).
-     - Added support for OpMode flavor (“Autonomous” or “TeleOp”) and group.
+     - Added support for OpMode flavor (“Autonomous” or “org.firstinspires.ftc.teamcode.Opmodes.TeleOp”) and group.
   * Changes to Samples to prevent tutorial issues.
   * Incorporated suggested changes from public pull 216 (“Replace .. paths”).
   * Remove Servo Glitches when robot stopped.
@@ -847,7 +847,7 @@ Changes include:
  * Fix mechanism added to all user to replace an electronic module easily.  For example, suppose a servo controller dies on your robot. You replace the broken module with a new module, which has a different serial number from the original servo controller.  You can use the Fix button to automatically reconfigure your configuration file to use the serial number of the new module.
  * Improvements made to fix resiliency and responsiveness of the system.
  * For LinearOpMode the user now must for a telemetry.update() to update the telemetry data on the driver station.  This update() mechanism ensures that the driver station gets the updated data properly and at the same time.
- * The Auto Configure function of the Robot Controller is now template based.  If there is a commonly used robot configuration, a template can be created so that the Auto Configure mechanism can be used to quickly configure a robot of this type.
+ * The org.firstinspires.ftc.teamcode.Auto Configure function of the Robot Controller is now template based.  If there is a commonly used robot configuration, a template can be created so that the org.firstinspires.ftc.teamcode.Auto Configure mechanism can be used to quickly configure a robot of this type.
  * The logic to detect a runaway op mode (both in the LinearOpMode and OpMode types) and to abort the run, then auto recover has been improved/implemented.
  * Fix has been incorporated so that Logitech F310 gamepad mappings will be correct for Marshmallow users.
 

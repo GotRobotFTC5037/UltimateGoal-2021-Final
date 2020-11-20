@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,8 +10,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.teamcode.HardwarePerseverence;
 
-@Autonomous(name = "Auto", group = "Pushbot")
+@Autonomous(name = "org/firstinspires/ftc/teamcode/Auto", group = "Pushbot")
 public class RedAuto extends LinearOpMode {
     HardwarePerseverence robot = new HardwarePerseverence();
     private final ElapsedTime runtime = new ElapsedTime();
@@ -121,6 +122,39 @@ public class RedAuto extends LinearOpMode {
             robot.rightBackDrive.setPower(v4);
         }
     }
+    public void continuousGyroStrafe(double heading,
+                                     double pose,
+                                     double power) {
+        double currentHeading;
+        double adjPower;
+        double driveAngle;
+        double headingRadians;
+        double poseDegrees;
+
+        currentHeading = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+        poseDegrees = ((pose - 3.1416 / 2) % (2 * 3.1416)) * (360 / (2 * 3.1416));
+        if (poseDegrees > 180) {
+            poseDegrees -= 360;
+        }
+        if (poseDegrees < -180) {
+            poseDegrees += 360;
+        }
+        adjPower = subtractAngle(poseDegrees, currentHeading) / 120;
+        driveAngle = ((-currentHeading / 180) * 3.1416) + (1 / 2 * 3.1416) + heading;
+//            driveAngle = 0.5*Math.PI;
+//            adjPower = 0;
+        double robotAngle = driveAngle - Math.PI / 4;
+        final double v1 = power * Math.cos(robotAngle) - adjPower;
+        final double v2 = power * Math.sin(robotAngle) + adjPower;
+        final double v3 = power * Math.sin(robotAngle) - adjPower;
+        final double v4 = power * Math.cos(robotAngle) + adjPower;
+        robot.leftDrive.setPower(v1);
+        robot.rightDrive.setPower(v2);
+        robot.leftBackDrive.setPower(v3);
+        robot.rightBackDrive.setPower(v4);
+        return;
+    }
+
     public void brake() {
         robot.leftDrive.setPower(0);
         robot.leftBackDrive.setPower(0);
@@ -158,11 +192,11 @@ public class RedAuto extends LinearOpMode {
         waitMilis(50);
         waitForStart();
         while (opModeIsActive()) {
-            autoPilot(0, 1.57, 61, .25, 15);
-            autoPilot(1.57,1.57,61,.25,15);
-            autoPilot(3.14,1.57,61,.25,15);
-            autoPilot(4.71,1.57,61,.25,15);
-            brake();
+//none
+            autoPilot(4.71,1.57,100,.7,10);
+            while (robot.bottomColor.red() < 10); {
+                autoPilot();
+            }
             waitMilis(100);
             stop();
         }

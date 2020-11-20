@@ -1,7 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package Test;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.HardwarePerseverence;
 
 //import com.spartronics4915.lib.T265Camera;
 @TeleOp(name="Motor Test", group="Pushbot")

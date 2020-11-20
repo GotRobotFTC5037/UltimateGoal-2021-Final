@@ -140,14 +140,14 @@ public class PerseverenceTeleop extends LinearOpMode {
 
             // Forks
             if (gamepad2.b) {
-                robot.grip.setPosition(gripCurr + .1);
-                waitMilis(20);
+                robot.grip.setPosition(.65);
+                waitMilis(100);
             } else if (gamepad2.a) {
-                robot.grip.setPosition(gripCurr - 1);
-                waitMilis(20);
+                robot.grip.setPosition(.2);
+                waitMilis(100);
             }
             // Arm
-            robot.arm.setPower(gamepad2.left_stick_y);
+            robot.arm.setPower(gamepad2.left_stick_y * .75);
 
 
             // Send telemetry message to signify robot running;

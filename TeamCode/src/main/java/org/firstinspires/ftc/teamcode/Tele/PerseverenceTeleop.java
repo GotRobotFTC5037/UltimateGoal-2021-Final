@@ -139,10 +139,10 @@ public class PerseverenceTeleop extends LinearOpMode {
             robot.rightBackDrive.setPower(v4 * driveSpeed);
 
             // Forks
-            if (gamepad2.b) {
+            if (gamepad2.b) { //open
                 robot.grip.setPosition(.65);
                 waitMilis(10);
-            } else if (gamepad2.a) {
+            } else if (gamepad2.a) { // closed
                 robot.grip.setPosition(.2);
                 waitMilis(10);
             }

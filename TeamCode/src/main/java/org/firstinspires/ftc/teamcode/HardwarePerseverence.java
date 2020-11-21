@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -61,7 +62,7 @@ public class HardwarePerseverence {
     public DcMotor rightBackDrive = null;
     public DcMotor arm = null;
     public Servo grip = null;
-    public RevColorSensorV3 bottomColor = null;
+    public ColorSensor bottomColor = null;
 
     public static final double MID_SERVO = 0.5;
     public static final double ARM_UP_POWER = 0.45;
@@ -88,7 +89,7 @@ public class HardwarePerseverence {
         rightBackDrive = hwMap.get(DcMotor.class, "rbd");
         arm = hwMap.get(DcMotor.class, "arm");
         grip = hwMap.get(Servo.class, "grip");
-        bottomColor = hwMap.get(RevColorSensorV3.class, "bottomColor");
+        bottomColor = hwMap.get(ColorSensor.class, "bottomColor");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);

@@ -122,9 +122,10 @@ public class RedAuto extends LinearOpMode {
             robot.rightBackDrive.setPower(v4);
         }
     }
-    public void continuousGyroStrafe(double heading,
-                                     double pose,
-                                     double power) {
+
+    public void whileAutoPilot(double heading,
+                               double pose,
+                               double power) {
         double currentHeading;
         double adjPower;
         double driveAngle;
@@ -190,14 +191,30 @@ public class RedAuto extends LinearOpMode {
         robot.rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitMilis(50);
+        robot.grip.setPosition(.2);
         waitForStart();
         while (opModeIsActive()) {
-//none
-            autoPilot(4.71,1.57,100,.7,10);
-            while (robot.bottomColor.red() < 10); {
-                autoPilot();
-            }
+            robot.grip.setPosition(.3);
+            waitMilis(300);
+            robot.grip.setPosition(.2);
             waitMilis(100);
+            robot.arm.setTargetPosition(-2450);
+            robot.arm.setPower(.25);
+            robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            waitMilis(50);
+            autoPilot(1.57,1.57,120,.4,10);
+            while (((double) robot.bottomColor.red() < 40) && ((double) robot.bottomColor.blue() < 40) && ((double) robot.bottomColor.green() < 40)) {
+                whileAutoPilot(1.57, 1.57, .4);
+            }
+          //  autoPilot(0.0, 1.57, 47.25, .4, 10);
+            runtime.reset();
+            autoPilot(1.1,1.57,112.5,0.7 - runtime.seconds()/7,10);
+            robot.grip.setPosition(.65);
+            waitMilis(200);
+            autoPilot(4.71,1.57,100,.6,10);
+//            while (((double) robot.bottomColor.red() < 40) & ((double) robot.bottomColor.blue() < 40) & ((double) robot.bottomColor.green() < 40)) {
+//                whileAutoPilot(4.71, 1.57, .75);
+//            }
             stop();
         }
     }

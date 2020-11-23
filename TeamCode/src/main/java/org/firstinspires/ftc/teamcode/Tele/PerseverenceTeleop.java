@@ -84,7 +84,7 @@ public class PerseverenceTeleop extends LinearOpMode {
         double max;
         double r;
         double robotAngle;
-        double driveSpeed = 1;
+        double driveSpeed;
         // Increase this value to trust encoder odometry less when fusing encoder measurements with VSLAM
         double encoderMeasurementCovariance = 0.8;
 
@@ -124,6 +124,11 @@ public class PerseverenceTeleop extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             //  slamra.getLastReceivedCameraUpdate();
+            if (gamepad1.right_trigger > 50) {
+                driveSpeed = .5;
+            } else {
+                driveSpeed = 1;
+            }
             double armCurr = robot.arm.getCurrentPosition();
             double gripCurr = robot.grip.getPosition();
             double rightX = gamepad1.right_stick_x;

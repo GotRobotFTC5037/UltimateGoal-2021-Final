@@ -2,6 +2,8 @@ package Test;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.HardwarePerseverence;
 
@@ -9,11 +11,19 @@ import org.firstinspires.ftc.teamcode.HardwarePerseverence;
 @TeleOp(name = "Motor Test", group = "Pushbot")
 public class PerseverenceMotorTest extends LinearOpMode {
     HardwarePerseverence robot = new HardwarePerseverence();
+    private final ElapsedTime runtime = new ElapsedTime();
+    public void waitMilis(double timeOutMs) {
+
+        runtime.reset();
+        while (runtime.milliseconds() < timeOutMs) ;
+    }
 
     @Override
 
     public void runOpMode() {
         robot.init(hardwareMap);
+        robot.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart();
         while (opModeIsActive()) {
 //            double leftPower = robot.leftDrive.getPower();
@@ -24,13 +34,13 @@ public class PerseverenceMotorTest extends LinearOpMode {
 //            }
 //            telemetry.addData("Motor Power", leftPower);
 //            sleep(15);
-            double redU = (double) robot.bottomColor.red() / (double) robot.bottomColor.alpha();
-            double greenU = (double) robot.bottomColor.green() / (double) robot.bottomColor.alpha();
-            double blueU = (double) robot.bottomColor.blue() / (double) robot.bottomColor.alpha();
-            telemetry.addData("Red",  (double) robot.bottomColor.red());
-            telemetry.addData("Blue",  (double) robot.bottomColor.blue());
-            telemetry.addData("Green",  (double) robot.bottomColor.green());
-            telemetry.update();
+            robot.arm.setTargetPosition(5);
+            robot.arm.setPower(.2);
+            robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            waitMilis(4000);
+            robot.arm.setTargetPosition(0);
+            robot.arm.setPower(.2);
+            robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
     }
 }

@@ -20,7 +20,12 @@ allprojects {
         google()
         maven {
             url 'https://maven.google.com'
-        }
+            }
         jcenter()
+        maven { url "https://maven.0x778.tk" }
     }
 }
+//dependencies {
+//    // This will get the latest compatible version
+//    implementation 'com.spartronics4915.lib:ftc265:2.1.2'
+//}

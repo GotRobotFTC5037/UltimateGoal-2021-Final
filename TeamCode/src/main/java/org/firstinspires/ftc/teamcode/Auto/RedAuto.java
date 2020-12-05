@@ -194,58 +194,27 @@ public class RedAuto extends LinearOpMode {
         robot.grip.setPosition(.2);
         waitForStart();
         while (opModeIsActive()) {
-            robot.grip.setPosition(.325);
+            robot.grip.setPosition(.3);
             waitMilis(300);
             robot.grip.setPosition(.2);
             waitMilis(100);
-            robot.arm.setTargetPosition(-2550);
+            robot.arm.setTargetPosition(-2450);
             robot.arm.setPower(.25);
             robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             waitMilis(50);
-            // go to line
-            autoPilot(1.57, 1.57, 120, .4, 10);
+            autoPilot(1.57,1.57,120,.4,10);
             while (((double) robot.bottomColor.red() < 40) && ((double) robot.bottomColor.blue() < 40) && ((double) robot.bottomColor.green() < 40)) {
                 whileAutoPilot(1.57, 1.57, .4);
             }
+          //  autoPilot(0.0, 1.57, 47.25, .4, 10);
             runtime.reset();
-            autoPilot(1.1, 1.57, 117.5, 0.6 - runtime.seconds() / 7, 10);
+            autoPilot(1.1,1.57,112.5,0.7 - runtime.seconds()/7,10);
             robot.grip.setPosition(.65);
-            //drop rings
             waitMilis(200);
-            autoPilot(4.71, 1.57, 100, .6, 10);
-            autoPilot(3.14, 1.57, 105, .7, 10);
-            robot.arm.setTargetPosition(-820);
-            robot.arm.setPower(.25);
-            robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            waitMilis(10);
-            robot.grip.setPosition(.2);
-            //grab wobble
-            autoPilot(4.71, 4.71, 88, .7, 10);
-//            runtime.reset();
-//            while (((double) robot.bottomColor.red() < 28) && (runtime.seconds() < 4)) {
-//                whileAutoPilot(0, 4.71, .2);
-//            }
-//            autoPilot(3.14, 4.71, 37, .7, 10);
-            autoPilot(4.71, 4.71, 4, .7, 10);
-            waitMilis(200);
-            robot.arm.setTargetPosition(-1500);
-            robot.arm.setPower(.45);
-            robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            waitMilis(1000);
-            autoPilot(1.57, 0, 100, .7, 10);
-            while (((double) robot.bottomColor.red() < 40) && ((double) robot.bottomColor.blue() < 40) && ((double) robot.bottomColor.green() < 40)) {
-                whileAutoPilot(1.57, 0, .4);
-            }
-            autoPilot(0, 0, 85, 0.5, 10);
-            robot.arm.setTargetPosition(-500);
-            robot.arm.setPower(.5);
-            robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            waitMilis(600);
-            autoPilot(3.14, 0, 75, 0.7, 10);
+            autoPilot(4.71,1.57,100,.6,10);
 //            while (((double) robot.bottomColor.red() < 40) & ((double) robot.bottomColor.blue() < 40) & ((double) robot.bottomColor.green() < 40)) {
 //                whileAutoPilot(4.71, 1.57, .75);
 //            }
-
             stop();
         }
     }

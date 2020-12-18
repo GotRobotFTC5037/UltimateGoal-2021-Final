@@ -1,9 +1,7 @@
 
 package Test;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.canvas.Canvas;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Transform2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;

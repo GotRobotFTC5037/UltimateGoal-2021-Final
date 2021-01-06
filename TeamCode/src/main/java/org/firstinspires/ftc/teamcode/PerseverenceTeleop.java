@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Tele;
+package org.firstinspires.ftc.teamcode;
 
 //import com.arcrobotics.ftclib.geometry.Pose2d;
 //import com.arcrobotics.ftclib.geometry.Rotation2d;
@@ -61,7 +61,8 @@ import org.firstinspires.ftc.teamcode.HardwarePerseverence;
 
 @TeleOp(name = "org/firstinspires/ftc/teamcode/Tele", group = "Pushbot")
 
-public class PerseverenceTeleop extends LinearOpMode {
+public class
+PerseverenceTeleop extends LinearOpMode {
     HardwarePerseverence robot = new HardwarePerseverence();
     private BNO055IMU imu;
     private final ElapsedTime runtime = new ElapsedTime();

@@ -1,10 +1,16 @@
-package org.firstinspires.ftc.teamcode.Auto;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import com.arcrobotics.ftclib.geometry.Pose2d;
+import com.arcrobotics.ftclib.geometry.Rotation2d;
+import com.arcrobotics.ftclib.geometry.Transform2d;
+import com.arcrobotics.ftclib.geometry.Translation2d;
+import com.spartronics4915.lib.T265Camera;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -14,6 +20,14 @@ import org.firstinspires.ftc.teamcode.HardwarePerseverence;
 
 @Autonomous(name = "org/firstinspires/ftc/teamcode/Auto", group = "Pushbot")
 public class RedAuto extends LinearOpMode {
+    Transform2d cameraToRobot = new Transform2d();
+    // Increase this value to trust encoder odometry less when fusing encoder measurements with VSLAM
+    double encoderMeasurementCovariance = 0.8;
+    // Set to the starting pose of the robot
+    Pose2d startingPose = new Pose2d(1, 1, new Rotation2d());
+
+    T265Camera slamra = new T265Camera(cameraToRobot, encoderMeasurementCovariance, hardwareMap.appContext);
+//slamra.setPose(startingPose); // Useful if your robot doesn't start at the field-relative origin
     HardwarePerseverence robot = new HardwarePerseverence();
     private final ElapsedTime runtime = new ElapsedTime();
     private BNO055IMU imu;

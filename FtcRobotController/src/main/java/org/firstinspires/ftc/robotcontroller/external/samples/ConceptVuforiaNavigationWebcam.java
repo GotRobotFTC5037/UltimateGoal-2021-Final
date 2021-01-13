@@ -1,3 +1,7 @@
+
+
+
+
 /* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -122,7 +126,7 @@ public class ConceptVuforiaNavigationWebcam extends LinearOpMode {
         /*
          * Retrieve the camera we are to use.
          */
-        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam1");
 
         /*
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);

@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.HardwarePerseverence;
 
-@Autonomous(name = "org/firstinspires/ftc/teamcode/Auto", group = "Pushbot")
+@Autonomous(name = "Auto", group = "Pushbot")
 public class RedAuto extends LinearOpMode {
     Transform2d cameraToRobot = new Transform2d();
     // Increase this value to trust encoder odometry less when fusing encoder measurements with VSLAM

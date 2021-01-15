@@ -34,6 +34,7 @@ package org.firstinspires.ftc.teamcode;
 //import com.arcrobotics.ftclib.geometry.Transform2d;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -59,7 +60,7 @@ import org.firstinspires.ftc.teamcode.HardwarePerseverence;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name = "org/firstinspires/ftc/teamcode/Tele", group = "Pushbot")
+@TeleOp(name = "Tele", group = "Pushbot")
 
 public class
 PerseverenceTeleop extends LinearOpMode {

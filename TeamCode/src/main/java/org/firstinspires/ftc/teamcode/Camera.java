@@ -61,14 +61,12 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 public class Camera {
     private HardwarePerseverence robot;
     private BNO055IMU imu;
-    private Telemetry tele;
     private LinearOpMode opMode;
     private HardwareMap hardwareMap;
 
-    Camera(HardwarePerseverence robot, BNO055IMU imu, Telemetry tele, LinearOpMode opMode, HardwareMap hardwareMap) {
+    Camera(HardwarePerseverence robot, BNO055IMU imu, LinearOpMode opMode, HardwareMap hardwareMap) {
         this.robot = robot;
         this.imu = imu;
-        this.tele = tele;
         this.opMode = opMode;
         this.hardwareMap = hardwareMap;
     }
@@ -109,12 +107,16 @@ public class Camera {
     private float phoneXRotate = 0;
     private float phoneYRotate = 0;
     private final float phoneZRotate = 0;
+    WebcamName webcamName = null;
 
-    public void vuphoriaNav() {
+    public void vuphoriaNav(Telemetry telemetry) {
+        telemetry.addData("Test","Start");
+        telemetry.update();
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters vuphoriaParameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
         vuphoriaParameters.vuforiaLicenseKey = VUFORIA_KEY;
-        vuphoriaParameters.cameraName = robot.webcam;
+        vuphoriaParameters.cameraName = webcamName;
         vuphoriaParameters.useExtendedTracking = false;
         vuforia = ClassFactory.getInstance().createVuforia(vuphoriaParameters);
 
@@ -131,6 +133,9 @@ public class Camera {
         blueAllianceTarget.setName("Blue Alliance Target");
         VuforiaTrackable frontWallTarget = targetsUltimateGoal.get(4);
         frontWallTarget.setName("Front Wall Target");
+
+        List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
+        allTrackables.addAll(targetsUltimateGoal);
 
         redAllianceTarget.setLocation(OpenGLMatrix
                 .translation(0, -halfField, mmTargetHeight)
@@ -153,8 +158,7 @@ public class Camera {
 
 
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
-        List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
-        allTrackables.addAll(targetsUltimateGoal);
+
         if (CAMERA_CHOICE == BACK) {
             phoneYRotate = -90;
         } else {
@@ -177,15 +181,17 @@ public class Camera {
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, YZX, DEGREES, phoneYRotate, phoneZRotate, phoneXRotate));
 
         /**  Let all the trackable listeners know where the phone is.  */
-        while (opMode.opModeIsActive()) {
-            targetsUltimateGoal.activate();
+        //while (opMode.opModeIsActive()) {
+
             // check all the trackable targets to see which one (if any) is visible.
             targetVisible = false;
             for (VuforiaTrackable trackable : allTrackables) {
+                ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
+            }
                 if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
-                    tele.addData("Visible Target", trackable.getName());
+                    telemetry.addData("Visible Target", trackable.getName());
                     targetVisible = true;
-
+                    targetsUltimateGoal.activate();
                     // getUpdatedRobotLocation() will return null if no new information is available since
                     // the last time that call was made, or if the trackable is not currently visible.
                     OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
@@ -195,21 +201,20 @@ public class Camera {
                     if (targetVisible) {
                         // express position (translation) of robot in inches.
                         VectorF translation = lastLocation.getTranslation();
-                        tele.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
+                        telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
                                 translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
 
                         // express the rotation of the robot in degrees.
                         Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-                        tele.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+                        telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
                     } else {
-                        tele.addData("Visible Target", "none");
+                        telemetry.addData("Visible Target", "none");
                     }
-                    tele.update();
-                    break;
+                    telemetry.update();
                 }
-            }
-        }
-        targetsUltimateGoal.deactivate();
 
+        //}
+       // targetsUltimateGoal.deactivate();
     }
+
 }

@@ -63,7 +63,6 @@ public class
 PerseverenceTeleop extends LinearOpMode {
     HardwarePerseverence robot = new HardwarePerseverence();
     private BNO055IMU imu;
-    private Telemetry tele;
     private LinearOpMode opMode;
     private final ElapsedTime runtime = new ElapsedTime();
 
@@ -87,7 +86,7 @@ PerseverenceTeleop extends LinearOpMode {
         double r;
         double robotAngle;
         double driveSpeed;
-        Camera cam = new Camera(robot, imu, tele, this, hardwareMap);
+        Camera cam = new Camera(robot, imu, this, hardwareMap);
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
@@ -138,8 +137,7 @@ PerseverenceTeleop extends LinearOpMode {
             robot.rightDrive.setPower(v2 * driveSpeed);
             robot.leftBackDrive.setPower(v3 * driveSpeed);
             robot.rightBackDrive.setPower(v4 * driveSpeed);
-            cam.vuphoriaNav();
-            telemetry.update();
+            cam.vuphoriaNav(telemetry);
 
         }
     }

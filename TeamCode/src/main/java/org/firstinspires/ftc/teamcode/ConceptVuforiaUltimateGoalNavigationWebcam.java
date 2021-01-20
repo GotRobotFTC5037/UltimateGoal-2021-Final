@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -89,7 +89,9 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 @TeleOp(name = "ULTIMATEGOAL Vuforia Nav Webcam", group = "Concept")
 
 public class ConceptVuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
-
+    HardwarePerseverence robot = new HardwarePerseverence();
+public ConceptVuforiaUltimateGoalNavigationWebcam(){
+}
     // IMPORTANT: If you are using a USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
     private static final boolean PHONE_IS_PORTRAIT = false;
@@ -126,19 +128,22 @@ public class ConceptVuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
      * This is the webcam we are to use. As with other hardware devices such as motors and
      * servos, this device is identified using the robot configuration tool in the FTC application.
      */
-    WebcamName webcamName = null;
+    WebcamName webcamName = robot.webcam;
 
     private boolean targetVisible = false;
     private float phoneXRotate = 0;
     private float phoneYRotate = 0;
     private final float phoneZRotate = 0;
 
+
+
     @Override
     public void runOpMode() {
         /*
          * Retrieve the camera we are to use.
          */
-        webcamName = hardwareMap.get(WebcamName.class, "Webcam");
+
+//        webcamName = hardwareMap.get(WebcamName.class, "Webcam");
 
 
         /*

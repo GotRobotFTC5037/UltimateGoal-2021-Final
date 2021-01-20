@@ -133,15 +133,18 @@ public ConceptVuforiaUltimateGoalNavigationWebcam(){
     private float phoneXRotate    = 0;
     private float phoneYRotate    = 0;
     private final float phoneZRotate    = 0;
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/ConceptVuforiaUltimateGoalNavigationWebcam.java
 
 <<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/ConceptVuforiaUltimateGoalNavigationWebcam.java
 
+=======
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele:FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/external/samples/ConceptVuforiaUltimateGoalNavigationWebcam.java
 
-    @Override
-    public void runOpMode() {
+    @Override public void runOpMode() {
         /*
          * Retrieve the camera we are to use.
          */
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/ConceptVuforiaUltimateGoalNavigationWebcam.java
 
 //        webcamName = hardwareMap.get(WebcamName.class, "Webcam");
 
@@ -150,6 +153,9 @@ public ConceptVuforiaUltimateGoalNavigationWebcam(){
         /*
          * Retrieve the camera we are to use.
          */
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele:FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/external/samples/ConceptVuforiaUltimateGoalNavigationWebcam.java
+=======
         webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 >>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele:FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/external/samples/ConceptVuforiaUltimateGoalNavigationWebcam.java
 

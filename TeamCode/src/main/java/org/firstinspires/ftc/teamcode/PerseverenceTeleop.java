@@ -39,7 +39,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -71,8 +74,12 @@ PerseverenceTeleop extends LinearOpMode {
     private LinearOpMode opMode;
     private final ElapsedTime runtime = new ElapsedTime();
 <<<<<<< HEAD
+<<<<<<< HEAD
     ConceptVuforiaUltimateGoalNavigationWebcam camera = new ConceptVuforiaUltimateGoalNavigationWebcam();
 
+=======
+    //    Transform2d cameraToRobot = new Transform2d();
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
 =======
     //    Transform2d cameraToRobot = new Transform2d();
 >>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
@@ -83,7 +90,10 @@ PerseverenceTeleop extends LinearOpMode {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
 =======
 >>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
 
@@ -100,8 +110,11 @@ PerseverenceTeleop extends LinearOpMode {
         double robotAngle;
         double driveSpeed;
 <<<<<<< HEAD
+<<<<<<< HEAD
         Camera cam = new Camera(robot, imu, this, hardwareMap);
 =======
+=======
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
         // Increase this value to trust encoder odometry less when fusing encoder measurements with VSLAM
         double encoderMeasurementCovariance = 0.8;
 
@@ -111,8 +124,11 @@ PerseverenceTeleop extends LinearOpMode {
          */
         robot.init(hardwareMap);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
 =======
 >>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -147,6 +163,10 @@ PerseverenceTeleop extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            //  slamra.getLastReceivedCameraUpdate();
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
 =======
             //  slamra.getLastReceivedCameraUpdate();
 >>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
@@ -172,6 +192,18 @@ PerseverenceTeleop extends LinearOpMode {
 
 <<<<<<< HEAD
 =======
+            // Forks
+            if (gamepad2.b) { //open
+                robot.grip.setPosition(.65);
+                waitMilis(10);
+            } else if (gamepad2.a) { // closed
+                robot.grip.setPosition(.2);
+                waitMilis(10);
+            }
+            // Arm
+            robot.arm.setPower(gamepad2.left_stick_y * .75);
+
+
             // Forks
             if (gamepad2.b) { //open
                 robot.grip.setPosition(.65);

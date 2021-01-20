@@ -38,6 +38,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+<<<<<<< HEAD
+=======
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.teamcode.HardwarePerseverence;
+//import com.spartronics4915.lib.T265Camera;
+
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
 
 /**
  * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
@@ -61,15 +70,22 @@ PerseverenceTeleop extends LinearOpMode {
     private BNO055IMU imu;
     private LinearOpMode opMode;
     private final ElapsedTime runtime = new ElapsedTime();
+<<<<<<< HEAD
     ConceptVuforiaUltimateGoalNavigationWebcam camera = new ConceptVuforiaUltimateGoalNavigationWebcam();
 
+=======
+    //    Transform2d cameraToRobot = new Transform2d();
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
     public void waitMilis(double timeOutMs) {
 
         runtime.reset();
         while (runtime.milliseconds() < timeOutMs) ;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
 
     @Override
     public void runOpMode() {
@@ -83,14 +99,22 @@ PerseverenceTeleop extends LinearOpMode {
         double r;
         double robotAngle;
         double driveSpeed;
+<<<<<<< HEAD
         Camera cam = new Camera(robot, imu, this, hardwareMap);
+=======
+        // Increase this value to trust encoder odometry less when fusing encoder measurements with VSLAM
+        double encoderMeasurementCovariance = 0.8;
+
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
-
         robot.init(hardwareMap);
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -99,16 +123,20 @@ PerseverenceTeleop extends LinearOpMode {
         parameters.loggingTag = "IMU";
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+        //  Pose2d startingPose = new Pose2d(1, 1, new Rotation2d());
+        //  T265Camera slamra = new T265Camera(cameraToRobot, encoderMeasurementCovariance);
         //reset the encoders to 0
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //run using the encoders
         robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Pushbot:", "Hello Driver");    //
         telemetry.update();
@@ -118,11 +146,17 @@ PerseverenceTeleop extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+<<<<<<< HEAD
+=======
+            //  slamra.getLastReceivedCameraUpdate();
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
             if (gamepad1.right_trigger > 50) {
                 driveSpeed = .5;
             } else {
                 driveSpeed = 1;
             }
+            double armCurr = robot.arm.getCurrentPosition();
+            double gripCurr = robot.grip.getPosition();
             double rightX = gamepad1.right_stick_x;
             r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
             robotAngle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
@@ -136,6 +170,35 @@ PerseverenceTeleop extends LinearOpMode {
             robot.rightBackDrive.setPower(v4 * driveSpeed);
             camera.runOpMode();
 
+<<<<<<< HEAD
+=======
+            // Forks
+            if (gamepad2.b) { //open
+                robot.grip.setPosition(.65);
+                waitMilis(10);
+            } else if (gamepad2.a) { // closed
+                robot.grip.setPosition(.2);
+                waitMilis(10);
+            }
+            // Arm
+            robot.arm.setPower(gamepad2.left_stick_y * .75);
+
+
+            // Send telemetry message to signify robot running;
+            double  currentHeading = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+            double headingRadians = -((-currentHeading / 180) * 3.1416) + (1 / 2 * 3.1416);
+            telemetry.addLine("Front Power");
+            telemetry.addData("Left Power", robot.leftDrive.getCurrentPosition());
+            telemetry.addData("Right Power", robot.rightDrive.getCurrentPosition());
+            telemetry.addLine("Back Power");
+            telemetry.addData("Left Power", robot.leftBackDrive.getCurrentPosition());
+            telemetry.addData("Right Power", robot.rightBackDrive.getCurrentPosition());
+            telemetry.addData("Arm", armCurr);
+            telemetry.addData("Grip", gripCurr);
+            telemetry.addLine("IMU");
+            telemetry.addData("Heading", headingRadians);
+            telemetry.update();
+>>>>>>> parent of 906786f... Got uphoria + tensorflow working with tele
         }
     }
 }

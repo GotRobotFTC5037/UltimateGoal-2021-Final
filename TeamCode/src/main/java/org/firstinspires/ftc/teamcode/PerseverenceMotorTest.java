@@ -21,7 +21,26 @@ public class PerseverenceMotorTest extends LinearOpMode {
     @Override
 
     public void runOpMode() {
-
+        robot.init(hardwareMap);
+        robot.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        waitForStart();
+        while (opModeIsActive()) {
+//            double leftPower = robot.leftDrive.getPower();
+//            if (gamepad1.dpad_up) {
+//                robot.leftDrive.setPower(leftPower+0.05);
+//            } else if (gamepad1.dpad_down) {
+//                robot.leftDrive.setPower(leftPower-0.05);
+//            }
+//            telemetry.addData("Motor Power", leftPower);
+//            sleep(15);
+            robot.arm.setTargetPosition(5);
+            robot.arm.setPower(.2);
+            robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            waitMilis(4000);
+            robot.arm.setTargetPosition(0);
+            robot.arm.setPower(.2);
+            robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
     }
-
+}

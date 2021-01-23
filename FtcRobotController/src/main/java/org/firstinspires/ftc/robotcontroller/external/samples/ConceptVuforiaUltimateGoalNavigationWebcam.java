@@ -136,7 +136,7 @@ public class ConceptVuforiaUltimateGoalNavigationWebcam extends LinearOpMode {
         /*
          * Retrieve the camera we are to use.
          */
-        webcamName = hardwareMap.get(WebcamName.class, "webcam");
+        webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.

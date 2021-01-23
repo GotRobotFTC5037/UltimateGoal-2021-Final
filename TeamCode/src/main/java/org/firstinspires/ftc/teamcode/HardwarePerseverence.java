@@ -40,6 +40,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+
 /**
  * This is NOT an opmode.
  * <p>
@@ -65,6 +67,7 @@ public class HardwarePerseverence {
     public DcMotor arm = null;
     public Servo grip = null;
     public ColorSensor bottomColor = null;
+    public WebcamName webcam = null;
 
     public static final double MID_SERVO = 0.5;
     public static final double ARM_UP_POWER = 0.45;
@@ -92,6 +95,7 @@ public class HardwarePerseverence {
         arm = hwMap.get(DcMotor.class, "arm");
         grip = hwMap.get(Servo.class, "grip");
         bottomColor = hwMap.get(ColorSensor.class, "bottomColor");
+        webcam = hwMap.get(WebcamName.class, "webcam");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);

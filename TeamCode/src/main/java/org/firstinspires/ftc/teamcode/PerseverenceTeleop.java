@@ -54,6 +54,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.HardwarePerseverence;
 
 import java.util.ArrayList;
@@ -88,6 +90,9 @@ PerseverenceTeleop extends LinearOpMode {
     HardwarePerseverence robot = new HardwarePerseverence();
     private BNO055IMU imu;
     private final ElapsedTime runtime = new ElapsedTime();
+    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
+    private static final String LABEL_FIRST_ELEMENT = "Quad";
+    private static final String LABEL_SECOND_ELEMENT = "Single";
 
     public void waitMilis(double timeOutMs) {
 
@@ -136,6 +141,7 @@ PerseverenceTeleop extends LinearOpMode {
      * This is the webcam we are to use. As with other hardware devices such as motors and
      * servos, this device is identified using the robot configuration tool in the FTC application.
      */
+    private TFObjectDetector tfod;
 
     @Override
     public void runOpMode() {
@@ -149,6 +155,7 @@ PerseverenceTeleop extends LinearOpMode {
         double r;
         double robotAngle;
         double driveSpeed;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
         initVuforia();
@@ -160,13 +167,27 @@ PerseverenceTeleop extends LinearOpMode {
         int escape = 0;
         int hertz = 0;
 >>>>>>> Stashed changes
+=======
+        initVuforia();
+        initTfod();
+>>>>>>> parent of 06285ec... Revert "tried adding TFOD"
 
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
 
         robot.init(hardwareMap);
+        if (tfod != null) {
+            tfod.activate();
 
+            // The TensorFlow software will scale the input images from the camera to a lower resolution.
+            // This can result in lower detection accuracy at longer distances (> 55cm or 22").
+            // If your target is at distance greater than 50 cm (20") you can adjust the magnification value
+            // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
+            // should be set to the value of the images used to create the TensorFlow Object Detection model
+            // (typically 16/9).
+            tfod.setZoom(2.5, 16.0 / 9.0);
+        }
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters vuphoriaParameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
         vuphoriaParameters.vuforiaLicenseKey = VUFORIA_KEY;
@@ -282,10 +303,13 @@ PerseverenceTeleop extends LinearOpMode {
                 }
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             if (gamepad1.b) {
                 robot.rollers.setPower(0);
 =======
+=======
+>>>>>>> parent of 06285ec... Revert "tried adding TFOD"
             if (tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
                 // the last time that call was made.
@@ -304,6 +328,7 @@ PerseverenceTeleop extends LinearOpMode {
                     telemetry.update();
                 }
             }
+<<<<<<< HEAD
 
             if (gamepad1.right_trigger > 50) {
                 driveSpeed = .5;
@@ -353,6 +378,8 @@ PerseverenceTeleop extends LinearOpMode {
                 robot.lookingGlass.setPower(0);
                 robot.flyWheel.setPower(0);
 =======
+=======
+>>>>>>> parent of 06285ec... Revert "tried adding TFOD"
 
             if (gamepad1.right_trigger > 50) {
                 driveSpeed = .5;
@@ -392,6 +419,30 @@ PerseverenceTeleop extends LinearOpMode {
             }
             telemetry.update();
         }
+        if (tfod != null) {
+            tfod.shutdown();
+        }
         targetsUltimateGoal.deactivate();
+    }
+
+    private void initVuforia() {
+
+
+        //  Instantiate the Vuforia engine
+
+
+        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
+    }
+
+    /**
+     * Initialize the TensorFlow Object Detection engine.
+     */
+    private void initTfod() {
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfodParameters.minResultConfidence = 0.8f;
+       // tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+       // tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
 }

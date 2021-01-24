@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Camera;
+
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -37,9 +39,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 /**
  * This is NOT an opmode.
@@ -59,13 +58,11 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
  */
 public class HardwarePerseverence {
     /* Public OpMode members. */
-    /**
-     * Motors
-     */
     public DcMotor leftDrive = null;
     public DcMotor rightDrive = null;
     public DcMotor leftBackDrive = null;
     public DcMotor rightBackDrive = null;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     public DcMotor tendrails = null;
 =======
@@ -93,11 +90,15 @@ public class HardwarePerseverence {
      * I2C
      */
     public RevColorSensorV3 escapeSensor = null;
+=======
+    public DcMotor arm = null;
+    public Servo grip = null;
+>>>>>>> parent of 17a29ba... New Robot Hardwware and tele
     public ColorSensor bottomColor = null;
-    /**
-     * USB
-     */
-    public CameraName webcam = null;
+
+    public static final double MID_SERVO = 0.5;
+    public static final double ARM_UP_POWER = 0.45;
+    public static final double ARM_DOWN_POWER = -0.45;
 
     /* local OpMode members. */
     HardwareMap hwMap = null;
@@ -113,11 +114,12 @@ public class HardwarePerseverence {
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        /** Motors */
+        // Define and Initialize Motors
         leftDrive = hwMap.get(DcMotor.class, "ld");
         rightDrive = hwMap.get(DcMotor.class, "rd");
         leftBackDrive = hwMap.get(DcMotor.class, "lbd");
         rightBackDrive = hwMap.get(DcMotor.class, "rbd");
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         tendrails = hwMap.get(DcMotor.class, "tendrails");
 =======
@@ -139,17 +141,22 @@ public class HardwarePerseverence {
       //  leftMarker = hwMap.get(AnalogInput.class, "leftMarker");
      //   rightMarker = hwMap.get(AnalogInput.class, "rightMarker");
         /** I2C */
+=======
+        arm = hwMap.get(DcMotor.class, "arm");
+        grip = hwMap.get(Servo.class, "grip");
+>>>>>>> parent of 17a29ba... New Robot Hardwware and tele
         bottomColor = hwMap.get(ColorSensor.class, "bottomColor");
-        escapeSensor = hwMap.get(RevColorSensorV3.class,"escapeSensor");
-        /** USB */
-        webcam = hwMap.get(WebcamName.class, "webcam");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         rollers.setDirection(DcMotorSimple.Direction.REVERSE);
 
+=======
+        arm.setDirection(DcMotorSimple.Direction.FORWARD);
+>>>>>>> parent of 17a29ba... New Robot Hardwware and tele
 
 =======
         arm.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -161,6 +168,7 @@ public class HardwarePerseverence {
         rightDrive.setPower(0);
         leftBackDrive.setPower(0);
         rightBackDrive.setPower(0);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         tendrails.setPower(0);
 =======
@@ -170,21 +178,24 @@ public class HardwarePerseverence {
         rollers.setPower(0);
         lookingGlass.setPower(0);
         flyWheel.setPower(0);
+=======
+>>>>>>> parent of 17a29ba... New Robot Hardwware and tele
         // Set all motors to run without encoders.
-        tendrails.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rollers.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lookingGlass.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         flyWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 =======
         flyWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 >>>>>>> Stashed changes
+=======
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+>>>>>>> parent of 17a29ba... New Robot Hardwware and tele
 
         // Define and initialize ALL installed servos.
 

@@ -281,6 +281,7 @@ PerseverenceTeleop extends LinearOpMode {
                     break;
                 }
             }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             if (gamepad1.b) {
                 robot.rollers.setPower(0);
@@ -351,13 +352,14 @@ PerseverenceTeleop extends LinearOpMode {
 >>>>>>> Stashed changes
                 robot.lookingGlass.setPower(0);
                 robot.flyWheel.setPower(0);
-            } else {
-                robot.rollers.setPower(1);
-                robot.lookingGlass.setPower(.7);
-                robot.flyWheel.setPower(1);
-            }
+=======
 
-            driveSpeed = 1;
+            if (gamepad1.right_trigger > 50) {
+                driveSpeed = .5;
+>>>>>>> parent of 17a29ba... New Robot Hardwware and tele
+            } else {
+                driveSpeed = 1;
+            }
             double rightX = gamepad1.right_stick_x;
             r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
             robotAngle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;

@@ -66,7 +66,11 @@ public class HardwarePerseverence {
     public DcMotor rightDrive = null;
     public DcMotor leftBackDrive = null;
     public DcMotor rightBackDrive = null;
+<<<<<<< Updated upstream
     public DcMotor tendrails = null;
+=======
+    //public DcMotor tendrails = null;
+>>>>>>> Stashed changes
     public DcMotor rollers = null;
     public DcMotor lookingGlass = null;
     public DcMotor flyWheel = null;
@@ -114,7 +118,12 @@ public class HardwarePerseverence {
         rightDrive = hwMap.get(DcMotor.class, "rd");
         leftBackDrive = hwMap.get(DcMotor.class, "lbd");
         rightBackDrive = hwMap.get(DcMotor.class, "rbd");
+<<<<<<< Updated upstream
         tendrails = hwMap.get(DcMotor.class, "tendrails");
+=======
+        arm = hwMap.get(CRServo.class, "arm");
+        //tendrails = hwMap.get(DcMotor.class, "tendrails");
+>>>>>>> Stashed changes
         rollers = hwMap.get(DcMotor.class, "roller");
         lookingGlass = hwMap.get(DcMotor.class, "lookingGlass");
         flyWheel = hwMap.get(DcMotor.class, "flyWheel");
@@ -138,15 +147,26 @@ public class HardwarePerseverence {
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+<<<<<<< Updated upstream
         rollers.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
+=======
+        arm.setDirection(DcMotorSimple.Direction.FORWARD);
+        rollers.setDirection(DcMotorSimple.Direction.FORWARD);
+
+>>>>>>> Stashed changes
         // Set all motors to zero power
         leftDrive.setPower(0);
         rightDrive.setPower(0);
         leftBackDrive.setPower(0);
         rightBackDrive.setPower(0);
+<<<<<<< Updated upstream
         tendrails.setPower(0);
+=======
+        // Set all motors to run without encoders.
+        //tendrails.setPower(0);
+>>>>>>> Stashed changes
         rollers.setPower(0);
         lookingGlass.setPower(0);
         flyWheel.setPower(0);
@@ -159,8 +179,12 @@ public class HardwarePerseverence {
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+<<<<<<< Updated upstream
         flyWheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+=======
+        flyWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+>>>>>>> Stashed changes
 
         // Define and initialize ALL installed servos.
 

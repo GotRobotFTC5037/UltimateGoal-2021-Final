@@ -149,6 +149,17 @@ PerseverenceTeleop extends LinearOpMode {
         double r;
         double robotAngle;
         double driveSpeed;
+<<<<<<< Updated upstream
+=======
+        initVuforia();
+        initTfod();
+        double oldTime = 0.0;
+        double oldLoopSeconds = runtime.seconds();
+        double oldFlyWheelPos = 0;
+        boolean lookingGlass;
+        int escape = 0;
+        int hertz = 0;
+>>>>>>> Stashed changes
 
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
@@ -270,8 +281,74 @@ PerseverenceTeleop extends LinearOpMode {
                     break;
                 }
             }
+<<<<<<< Updated upstream
             if (gamepad1.b) {
                 robot.rollers.setPower(0);
+=======
+            if (tfod != null) {
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    telemetry.addData("# Object Detected", updatedRecognitions.size());
+                    // step through the list of recognitions and display boundary info.
+                    int i = 0;
+                    for (Recognition recognition : updatedRecognitions) {
+                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                                recognition.getLeft(), recognition.getTop());
+                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                                recognition.getRight(), recognition.getBottom());
+                    }
+                    telemetry.update();
+                }
+            }
+
+            if (gamepad1.right_trigger > 50) {
+                driveSpeed = .5;
+            } else {
+                driveSpeed = 1;
+            }
+            //choker
+            if (gamepad2.x && !(3/*Volts*/ <= robot.chokerSwitch.getVoltage())) {
+                robot.choker.setPower(1);
+            } else if (gamepad2.y) {
+                robot.choker.setPower(-1);
+            } else {
+                robot.choker.setPower(0);
+            }
+            // arm
+            robot.arm.setPower(gamepad2.right_stick_y * .8);
+            //escapment servo
+            switch (escape) {
+                case 0:
+                    escape++;
+                    break;
+                case 1:
+                    if (gamepad2.a) {
+                        oldTime = runtime.milliseconds();
+                        robot.finalEscapeServo.setPosition(0);
+                        escape++;
+                    }
+                    break;
+                case 2:
+                    if (runtime.milliseconds() > oldTime + 1000) {
+                        robot.finalEscapeServo.setPosition(.2);
+                        escape = 0;
+                    } else {
+                        break;
+                    }
+            }
+            //aim
+            //robot.aimbot.setPosition(.6);
+
+            //looking glass
+            if(gamepad2.dpad_up) {
+                robot.lookingGlass.setPower(1);
+            } else if (gamepad2.dpad_down){
+                robot.lookingGlass.setPower(-1);
+            } else if (gamepad2.dpad_right){
+>>>>>>> Stashed changes
                 robot.lookingGlass.setPower(0);
                 robot.flyWheel.setPower(0);
             } else {

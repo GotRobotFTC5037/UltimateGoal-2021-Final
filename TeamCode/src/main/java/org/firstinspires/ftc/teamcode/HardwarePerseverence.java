@@ -33,9 +33,11 @@ import android.graphics.Camera;
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -64,8 +66,34 @@ public class HardwarePerseverence {
     public DcMotor rightDrive = null;
     public DcMotor leftBackDrive = null;
     public DcMotor rightBackDrive = null;
+<<<<<<< Updated upstream
     public DcMotor arm = null;
     public Servo grip = null;
+=======
+    //public DcMotor tendrails = null;
+    public DcMotor rollers = null;
+    public DcMotor lookingGlass = null;
+    public DcMotor flyWheel = null;
+    /**
+     * Servos
+     */
+    public CRServo arm = null;
+    public CRServo choker = null;
+    public Servo aimbot = null;
+    public Servo escapeServo = null;
+    public Servo finalEscapeServo = null;
+    /** Analog */
+    /**
+     * Digital
+     */
+    public AnalogInput chokerSwitch = null;
+ //   public AnalogInput leftMarker = null;
+  //  public AnalogInput rightMarker = null;
+    /**
+     * I2C
+     */
+    public RevColorSensorV3 escapeSensor = null;
+>>>>>>> Stashed changes
     public ColorSensor bottomColor = null;
     public WebcamName webcam = null;
 
@@ -81,6 +109,11 @@ public class HardwarePerseverence {
     public HardwarePerseverence() {
 
     }
+    public static final double choke = 1;
+    public static final double loosen = 0;
+    public static final double servoOff = .5;
+    public static final double closedSwitch = 3;
+    public static final double openSwitch = 0;
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
@@ -92,28 +125,76 @@ public class HardwarePerseverence {
         rightDrive = hwMap.get(DcMotor.class, "rd");
         leftBackDrive = hwMap.get(DcMotor.class, "lbd");
         rightBackDrive = hwMap.get(DcMotor.class, "rbd");
+<<<<<<< Updated upstream
         arm = hwMap.get(DcMotor.class, "arm");
         grip = hwMap.get(Servo.class, "grip");
+=======
+        //tendrails = hwMap.get(DcMotor.class, "tendrails");
+        rollers = hwMap.get(DcMotor.class, "roller");
+        lookingGlass = hwMap.get(DcMotor.class, "lookingGlass");
+        flyWheel = hwMap.get(DcMotor.class, "flyWheel");
+        /** Servos */
+        arm = hwMap.get(CRServo.class, "arm");
+        choker = hwMap.get(CRServo.class, "choker");
+        aimbot = hwMap.get(Servo.class, "aimbot");
+        escapeServo = hwMap.get(Servo.class, "escapeServo");
+        finalEscapeServo = hwMap.get(Servo.class, "finalEscapeServo");
+        /** Analog */
+        /** Digital */
+        chokerSwitch = hwMap.get(AnalogInput.class, "chokerSwitch");
+      //  leftMarker = hwMap.get(AnalogInput.class, "leftMarker");
+     //   rightMarker = hwMap.get(AnalogInput.class, "rightMarker");
+        /** I2C */
+>>>>>>> Stashed changes
         bottomColor = hwMap.get(ColorSensor.class, "bottomColor");
         webcam = hwMap.get(WebcamName.class, "webcam");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+<<<<<<< Updated upstream
         arm.setDirection(DcMotorSimple.Direction.FORWARD);
+=======
+        rollers.setDirection(DcMotorSimple.Direction.FORWARD);
+
+
+>>>>>>> Stashed changes
 
         // Set all motors to zero power
         leftDrive.setPower(0);
         rightDrive.setPower(0);
         leftBackDrive.setPower(0);
         rightBackDrive.setPower(0);
+<<<<<<< Updated upstream
         // Set all motors to run without encoders.
+=======
+        //tendrails.setPower(0);
+        rollers.setPower(0);
+        lookingGlass.setPower(0);
+        flyWheel.setPower(0);
+
+        leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Set all motors to run without encoders.
+        //tendrails.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rollers.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lookingGlass.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+>>>>>>> Stashed changes
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+<<<<<<< Updated upstream
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+=======
+        flyWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+
+>>>>>>> Stashed changes
 
         // Define and initialize ALL installed servos.
 

@@ -26,6 +26,7 @@ public class PerseverenceMotorTest extends LinearOpMode {
         robot.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart();
         while (opModeIsActive()) {
+<<<<<<< Updated upstream
 //            double leftPower = robot.leftDrive.getPower();
 //            if (gamepad1.dpad_up) {
 //                robot.leftDrive.setPower(leftPower+0.05);
@@ -42,5 +43,55 @@ public class PerseverenceMotorTest extends LinearOpMode {
             robot.arm.setPower(.2);
             robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
+=======
+            telemetry.addData("Switch", robot.chokerSwitch.getVoltage());
+            telemetry.update();
+            waitMilis(500);
+        }
+//            telemetry.addData("Ready?", "Press A");
+//            telemetry.update();
+//            while (!gamepad1.a) {
+//                waitMilis(50);
+//            }
+//            waitMilis(500);
+//            robot.finalEscapeServo.setPosition(0);
+//
+//        telemetry.addData("Choker", "Press A for positive 25%");
+//        telemetry.update();
+//        while (!gamepad1.a) {
+//            waitMilis(50);
+//        }
+//        //robot.rollers.setPower(.25);
+//        robot.choker.setPosition(0);
+//        waitMilis(5000);
+//        robot.rollers.setPower(0);
+//        telemetry.addData("Arm", "Press A for positive 25%");
+//        telemetry.update();
+//        while (!gamepad1.a) {
+//            waitMilis(50);
+//        }
+//        //robot.tendrails.setPower(.25);
+//        robot.arm.setPosition(0);
+//        waitMilis(5000);
+//        robot.tendrails.setPower(0);
+//        telemetry.addData("Aim", "Press A for positive 25%");
+//        telemetry.update();
+//        while (!gamepad1.a) {
+//            waitMilis(50);
+//        }
+//        //robot.lookingGlass.setPower(.25);
+//        robot.aimbot.setPosition(0);
+//        waitMilis(5000);
+//        robot.lookingGlass.setPower(0);
+//        telemetry.addData("Final Escapement", "Press A for positive 25%");
+//        telemetry.update();
+//        while (!gamepad1.a) {
+//            waitMilis(50);
+//        }
+//        //robot.flyWheel.setPower(.25);
+//        robot.finalEscapeServo.setPosition(0);
+//        waitMilis(5000);
+//        robot.flyWheel.setPower(0);
+>>>>>>> Stashed changes
     }
 }

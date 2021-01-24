@@ -155,8 +155,17 @@ PerseverenceTeleop extends LinearOpMode {
         double r;
         double robotAngle;
         double driveSpeed;
+<<<<<<< Updated upstream
         initVuforia();
         initTfod();
+=======
+        double oldTime = 0.0;
+        double oldLoopSeconds = runtime.seconds();
+        double oldFlyWheelPos = 0;
+        boolean lookingGlass;
+        int escape = 0;
+        int hertz = 0;
+>>>>>>> Stashed changes
 
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
@@ -268,6 +277,8 @@ PerseverenceTeleop extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        double initialPos = robot.flyWheel.getCurrentPosition();
+        runtime.reset();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -288,6 +299,7 @@ PerseverenceTeleop extends LinearOpMode {
                     break;
                 }
             }
+<<<<<<< Updated upstream
             if (tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
                 // the last time that call was made.
@@ -312,6 +324,59 @@ PerseverenceTeleop extends LinearOpMode {
             } else {
                 driveSpeed = 1;
             }
+=======
+            //choker
+            if (gamepad2.x && !(3/*Volts*/ <= robot.chokerSwitch.getVoltage())) {
+                robot.choker.setPower(1);
+            } else if (gamepad2.y) {
+                robot.choker.setPower(-1);
+            } else {
+                robot.choker.setPower(0);
+            }
+            // arm
+            robot.arm.setPower(gamepad2.right_stick_y * .8);
+            //escapment servo
+            switch (escape) {
+                case 0:
+                    escape++;
+                    break;
+                case 1:
+                    if (gamepad2.a) {
+                        oldTime = runtime.milliseconds();
+                        robot.finalEscapeServo.setPosition(0);
+                        escape++;
+                    }
+                    break;
+                case 2:
+                    if (runtime.milliseconds() > oldTime + 1000) {
+                        robot.finalEscapeServo.setPosition(.2);
+                        escape = 0;
+                    } else {
+                        break;
+                    }
+            }
+            //aim
+            //robot.aimbot.setPosition(.6);
+
+            //looking glass
+            if(gamepad2.dpad_up) {
+                robot.lookingGlass.setPower(1);
+            } else if (gamepad2.dpad_down){
+                robot.lookingGlass.setPower(-1);
+            } else if (gamepad2.dpad_right){
+                robot.lookingGlass.setPower(0);
+            }
+
+            //rollers
+            robot.rollers.setPower(-gamepad2.right_trigger * .65);
+            robot.rollers.setPower(gamepad2.left_trigger * .65);
+            //flywheel
+            if (gamepad2.dpad_left) {
+                robot.flyWheel.setPower(1);
+                oldLoopSeconds = runtime.seconds();
+            }
+            driveSpeed = 1;
+>>>>>>> Stashed changes
             double rightX = gamepad1.right_stick_x;
             r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
             robotAngle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
@@ -325,11 +390,11 @@ PerseverenceTeleop extends LinearOpMode {
             robot.rightBackDrive.setPower(v4 * driveSpeed);
 
             // Send telemetry message to signify robot running;
-            double currentHeading = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+            double currentHeading = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, DEGREES).secondAngle;
             double headingRadians = -((-currentHeading / 180) * 3.1416) + (1 / 2 * 3.1416);
             telemetry.addLine("IMU");
             telemetry.addData("Heading", headingRadians);
-            // Provide feedback as to where the robot is located (if we know).
+            // Provide feedback as to where the robot is locatexd (if we know).
             if (targetVisible) {
                 // express position (translation) of robot in inches.
                 VectorF translation = lastLocation.getTranslation();
@@ -342,7 +407,13 @@ PerseverenceTeleop extends LinearOpMode {
             } else {
                 telemetry.addData("Visible Target", "none");
             }
+
+            telemetry.addData("FlyWheel", ((robot.flyWheel.getCurrentPosition())/28) / ((runtime.seconds() - oldLoopSeconds)));
+            telemetry.addData("Time", runtime.seconds() - oldLoopSeconds);
+            telemetry.addData("Hertz", hertz / runtime.seconds());
             telemetry.update();
+            oldFlyWheelPos = robot.flyWheel.getCurrentPosition();
+            hertz++;
         }
         if (tfod != null) {
             tfod.shutdown();
